@@ -9,40 +9,76 @@ import random, string
 def generate_string():	# generates a random string 27 char long
 	
 	available_characters = "abcdefghijklmnopqrstuvwxyz "
-	new_string = ''.join(random.choice(available_characters) for i in range(27))
+	new_string = ''.join(random.choice(available_characters) for i in range(28))
 	return new_string
+	
+
+def check_string(current_string):
+	
+	shakespeare = "methinks it is like a weasel"
+	match = 0
+	incorrect_indices = []
+	
+	for i in range(28):
+		if shakespeare[i] == current_string[i]:
+			match += 1
+		else:
+			incorrect_indices.append(i)
+	
+	match_percentage = float(match) / 28 * 100
+	
+	return current_string, match_percentage, incorrect_indices
+	
+
+def update_string(current_string, match_percentage, correct_indices):
+	
+	updated_string = ''
+	
+	for i in range(28):
+		if i in correct_indices:
+			updated_string += current_string[i]
+		else:
+			updated_string += random.choice("abcdefghijklmnopqrstuvwxyz ")
+			
+	return updated_string
+	
+	
+def update_one(current_string, match_percentage, incorrect_indices):
+	
+	updated_string = ''
+	
+	index = random.choice(incorrect_indices)
+	
+	for i in range(28):
+		if i != index:
+			updated_string += current_string[i]
+		else:
+			updated_string += random.choice("abcdefghijklmnopqrstuvwxyz ")
+	
+	return updated_string
+	
+	
+starting = generate_string()
+
+current_string, match_percentage, incorrect_indices = check_string(starting)
 
 
-def score_string(random_string):		# scores string based on how close it is
-	
-	shakespear = "methinks it is like a weasel"
-	percent_match = 0
-	
-	for i in range(27):
-		if shakespear[i] == random_string[i]:
-			percent_match += 1
-		
-	return float(percent_match) / 27 * 100
-	
-	
-def string_checker():	# calls the other two, if 100%, we're done. Print every 1000th try and best string so far
-	
-	highest_match = 0
-	total_calls = 0
-	percentage_match = 0
-	
-	while percentage_match < 100.0:
-	
-		new_string = generate_string()
-		percentage_match = score_string(new_string)
-		if percentage_match > highest_match:
-			highest_match = percentage_match
-			print new_string, percentage_match
-		total_calls += 1
-		if total_calls % 1000 == 0:
-			print new_string, total_calls
-		
-	print "loop completed at %d calls" % (total_calls)
+def do_the_thing(current_string, match_percentage, incorrect_indices):
 
+	total_count = 0
 
-string_checker()
+	while match_percentage < 100:
+
+		updated_string = update_one(current_string, match_percentage, incorrect_indices)
+		current_string, match_percentage, incorrect_indices = check_string(updated_string)
+		total_count += 1
+		if total_count % 10 == 0:
+			print current_string, match_percentage
+			
+	print current_string, match_percentage
+	print "Total count: ", total_count
+
+	
+do_the_thing(current_string, match_percentage, incorrect_indices)
+	
+
