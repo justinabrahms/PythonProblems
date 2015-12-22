@@ -86,10 +86,33 @@ def general_checker(string):
 	else:
 		return 'Unalanced'
 
-
-
+'''
 print 'Should be balanced: Is', paren_checker('(((())))(()((())()))')
 print 'Should be unbalanced: Is', paren_checker('()))(()()(()')
 
 print "Should be balanced. Is: ", general_checker('{{([][])}()}')
 print "Should be unbalanced. Is: ", general_checker('( ( ( ) ] ) )')
+'''
+
+def int_to_bin(value):
+	
+	stack = Stack()
+	num = int(value)
+	binary_num = ''
+	
+	while num > 0:
+		
+		mod = num % 2
+		stack.push(mod)
+		num = num // 2
+
+	while stack.isEmpty() == False:
+		binary_num += str(stack.pop())
+		
+	return binary_num
+
+
+if int_to_bin(233) == '11101001':
+	print "233 equals", int_to_bin(233)
+else:
+	print "Doesn't work."
