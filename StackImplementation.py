@@ -19,7 +19,7 @@ class Stack():
 		return self.items[-1]
 		
 	def isEmpty(self):
-		return self.items == []
+		return self.size() == 0
 		
 	def size(self):
 		return len(self.items)
@@ -33,7 +33,7 @@ def rev_string(inputString):
 	for char in inputString:
 		stack.push(char)
 	
-	while stack.isEmpty() == False:
+	while not stack.isEmpty():
 		new_string += stack.pop()
 		
 	return new_string	
@@ -47,15 +47,13 @@ def paren_checker(string):
 		if char == '(':
 			stack.push(char)
 		elif char == ')':
-			if stack.isEmpty() == False:
-				stack.pop()
-			else:
+			if stack.isEmpty():
 				return 'Unbalanced'
+			stack.pop()
 	
-	if stack.isEmpty() == False:
-		return 'Unbalanced'
-	else:
+	if stack.isEmpty():
 		return 'Balanced'
+	return 'Unbalanced'
 
 
 def general_checker(string):
@@ -68,18 +66,17 @@ def general_checker(string):
 		if char in opens:
 			stack.push(char)
 		elif char in closes:
-			if stack.isEmpty() == False:
-				prior = stack.pop()
-				if char == ')' and prior != '(':
-					return 'Unbalanced'
-				if char == ']'and prior != '[':
-					return 'Unbalanced'
-				if char == '}'and prior != '{':
-					return 'Unbalanced'
-				if char == '>'and prior != '<':
-					return 'Unbalanced'
-			else:
+			if stack.isEmpty():
 				return "Stack is prematurely empty. Unbalanced"
+			prior = stack.pop()
+			for opening, closing in [
+				('(', ')'),
+				('[', ']'),
+				('{', '}'),
+				('<', '>'),
+		 	]:
+		 		if char == closing and prior != opening:
+		 			return 'Unbalanced'
 	
 	if stack.isEmpty():
 		return 'Balanced'
@@ -94,18 +91,17 @@ def int_to_bin(value):
 	binary_num = ''
 	
 	while num > 0:
-		
-		mod = num % 2
-		stack.push(mod)
+		stack.push(num % 2)
 		num = num // 2
 
-	while stack.isEmpty() == False:
+	while not stack.isEmpty():
 		binary_num += str(stack.pop())
 		
 	return binary_num
 
 
-if int_to_bin(233) == '11101001':
-	print "233 equals", int_to_bin(233)
+result = int_to_bin(233)
+if result == '11101001':
+	print "233 equals", result
 else:
 	print "Doesn't work."
