@@ -86,13 +86,6 @@ def general_checker(string):
 	else:
 		return 'Unalanced'
 
-'''
-print 'Should be balanced: Is', paren_checker('(((())))(()((())()))')
-print 'Should be unbalanced: Is', paren_checker('()))(()()(()')
-
-print "Should be balanced. Is: ", general_checker('{{([][])}()}')
-print "Should be unbalanced. Is: ", general_checker('( ( ( ) ] ) )')
-'''
 
 def int_to_bin(value):
 	
