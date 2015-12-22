@@ -24,3 +24,22 @@ class Stack():
 	def size(self):
 		return len(self.items)
 
+
+def rev_string(inputString):
+	
+	stack = Stack()
+	new_string = str()
+	
+	for char in inputString:
+		stack.push(char)
+	
+	while stack.isEmpty() == False:
+		new_string += stack.pop()
+		
+	return new_string	
+
+
+if rev_string('weener') == 'reneew':
+	print "string reversed:", rev_string('weener')
+else:
+	print "something's fucked"
