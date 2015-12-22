@@ -58,7 +58,38 @@ def paren_checker(string):
 		return 'Balanced'
 
 
+def general_checker(string):
+	
+	stack = Stack()
+	opens = '([{<'
+	closes = ')]}>'
+	
+	for char in string:
+		if char in opens:
+			stack.push(char)
+		elif char in closes:
+			if stack.isEmpty() == False:
+				prior = stack.pop()
+				if char == ')' and prior != '(':
+					return 'Unbalanced'
+				if char == ']'and prior != '[':
+					return 'Unbalanced'
+				if char == '}'and prior != '{':
+					return 'Unbalanced'
+				if char == '>'and prior != '<':
+					return 'Unbalanced'
+			else:
+				return "Stack is prematurely empty. Unbalanced"
+	
+	if stack.isEmpty():
+		return 'Balanced'
+	else:
+		return 'Unalanced'
+
+
+
 print 'Should be balanced: Is', paren_checker('(((())))(()((())()))')
 print 'Should be unbalanced: Is', paren_checker('()))(()()(()')
 
-
+print "Should be balanced. Is: ", general_checker('{{([][])}()}')
+print "Should be unbalanced. Is: ", general_checker('( ( ( ) ] ) )')
