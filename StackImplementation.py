@@ -69,12 +69,8 @@ def general_checker(string):
 			if stack.isEmpty():
 				return "Stack is prematurely empty. Unbalanced"
 			prior = stack.pop()
-			for opening, closing in [
-				('(', ')'),
-				('[', ']'),
-				('{', '}'),
-				('<', '>'),
-		 	]:
+			for parens in ["( )", "[ ]", "{ }", "< >"]:
+				opening, closing = parens.split()
 		 		if char == closing and prior != opening:
 		 			return 'Unbalanced'
 	
