@@ -39,7 +39,26 @@ def rev_string(inputString):
 	return new_string	
 
 
-if rev_string('weener') == 'reneew':
-	print "string reversed:", rev_string('weener')
-else:
-	print "something's fucked"
+def paren_checker(string):
+	
+	stack = Stack()
+	
+	for char in string:
+		if char == '(':
+			stack.push(char)
+		elif char == ')':
+			if stack.isEmpty() == False:
+				stack.pop()
+			else:
+				return 'Unbalanced'
+	
+	if stack.isEmpty() == False:
+		return 'Unbalanced'
+	else:
+		return 'Balanced'
+
+
+print 'Should be balanced: Is', paren_checker('(((())))(()((())()))')
+print 'Should be unbalanced: Is', paren_checker('()))(()()(()')
+
+
